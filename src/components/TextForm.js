@@ -13,6 +13,7 @@ export default function TextForm(props) {
         console.log("click");
         let newText = text.toLowerCase();
         setText(newText);
+        props.showAlert("Converted to lowercase", "success")
     }
     const handleCapClick = () =>{
         console.log("click");
@@ -24,6 +25,7 @@ export default function TextForm(props) {
         }
         let newText = text1.join(". ");
         setText(newText);
+        props.showAlert("Converted to capitalcase", "success")
     }
 
     const handleOnChange = (event) =>{
@@ -39,15 +41,15 @@ export default function TextForm(props) {
         <textarea className="form-control" value = {text} style={{backgroundColor:props.mode==='light'?'white':'grey', 
         color:props.mode==='dark'?'white':'black'}} onChange={handleOnChange} id="myBox" rows="8" ></textarea>
         </div>
-        <button className="btn btn-primary mx-2" onClick={handleUpClick}>Convert to Uppercase</button>
-        <button className="btn btn-primary mx-2" onClick={handleLowClick}>Convert to Lowercase</button>
-        <button className="btn btn-primary my-2" onClick={handleCapClick}>Convert to CapitalCase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2 my-1" onClick={handleUpClick}>Convert to Uppercase</button>
+        <button disabled={text.length===0} className="btn btn-primary mx-2 my-1" onClick={handleLowClick}>Convert to Lowercase</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={handleCapClick}>Convert to CapitalCase</button>
         
     </div>
     <div className="container my-3" style={{color:props.mode==='dark'?'white':'black'}}>
         <h2>Your text summary</h2>
-        <p>{text.split(" ").length} word and {text.length} characters</p>
-        <p>{0.008 *text.split(" ").length} Minutes to read</p>
+        <p>{text.split(" ").filter((element)=>{return element.length!==0}).length} word and {text.length} characters</p>
+        <p>{0.008 *text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes to read</p>
         <h3>Preview</h3>
          <p>{text.length>0?text:"Enter something in the textbox above to preview here"}</p>
     </div>
